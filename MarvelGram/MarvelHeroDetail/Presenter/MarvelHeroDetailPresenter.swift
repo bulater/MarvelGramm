@@ -8,13 +8,14 @@
 import Foundation
 
 protocol MarvelHeroDetailPresenterProtocol {
-
+    func setHeroImage()
 }
 
 class MarvelHeroDetailPresenter {
     // MARK: - Public Properties
 
     weak var view: MarvelHeroDetailViewProtocol?
+    var hero: MarvelHeroViewModel?
 
     // MARK: - Init
 
@@ -26,5 +27,9 @@ class MarvelHeroDetailPresenter {
 // MARK: - MarvelHeroDetailPresenterProtocol
 
 extension MarvelHeroDetailPresenter: MarvelHeroDetailPresenterProtocol {
-
+    func setHeroImage() {
+        guard let hero = hero else { return }
+        let image = NetworkManager.shared.getMarvelHeroImage(from: hero)
+        view?.setHeroImage(image: image)
+    }
 }

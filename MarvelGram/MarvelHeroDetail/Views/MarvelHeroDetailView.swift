@@ -8,7 +8,6 @@
 import UIKit
 
 protocol MarvelHeroDetailViewDelegate: AnyObject {
-
 }
 
 class MarvelHeroDetailView: UIView {
@@ -17,6 +16,7 @@ class MarvelHeroDetailView: UIView {
     weak var delegate: MarvelHeroDetailViewDelegate?
 
     lazy var marvelHeroDetailCollectionView: MarvelHeroDetailCollectionView = { MarvelHeroDetailView.makeCollectionView(self) }()
+    lazy var heroImageView: UIImageView = { MarvelHeroDetailView.makeHeroImageView() }()
 
     // MARK: - Private Properties
 
@@ -30,6 +30,12 @@ class MarvelHeroDetailView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+
+    func setHeroImageView(image: UIImage?) {
+        heroImageView.image = image
     }
 
     // MARK: - Make Subviews
@@ -46,12 +52,23 @@ class MarvelHeroDetailView: UIView {
         return collectionView
     }
 
+    static func makeHeroImageView() -> UIImageView {
+        let view = UIImageView()
+        view.backgroundColor = .red
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }
+
 
     // MARK: - Add SubViews
 
     private func addSubViews() {
-        addSubview(marvelHeroDetailCollectionView)
-        activateCollectionViewConstraints()
+        addSubview(heroImageView)
+        activateHeroImageViewConstraints()
+
+//        addSubview(marvelHeroDetailCollectionView)
+//        activateCollectionViewConstraints()
     }
 
     // MARK: - Layout
@@ -59,6 +76,15 @@ class MarvelHeroDetailView: UIView {
     private func activateCollectionViewConstraints() {
         NSLayoutConstraint.activate([
 
+        ])
+    }
+
+    private func activateHeroImageViewConstraints() {
+        NSLayoutConstraint.activate([
+            heroImageView.topAnchor.constraint(equalTo: topAnchor),
+            heroImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            heroImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            heroImageView.heightAnchor.constraint(equalToConstant: 375)
         ])
     }
 }

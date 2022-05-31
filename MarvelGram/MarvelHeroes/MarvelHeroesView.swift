@@ -10,6 +10,7 @@ import UIKit
 protocol MarvelHeroesViewDelegate: AnyObject {
     func marvelHeroesViewGetCollectionViewCellsCount(marvelHeroesView: MarvelHeroesView) -> Int?
     func marvelHeroesView(marvelHeroesView: MarvelHeroesView, getSuperHeroViewModelAt index: Int) -> MarvelHeroViewModel?
+    func marvelHeroesView(marvelHeroesView: MarvelHeroesView, didselectHeroAtIndex index: Int)
 }
 
 class MarvelHeroesView: UIView {
@@ -124,6 +125,10 @@ class MarvelHeroesView: UIView {
     // MARK: - MarvelHeroesCollectionViewDelegate
 
 extension MarvelHeroesView: MarvelHeroesCollectionViewDelegate {
+    func marvelHeroesCollectionView(marvelHeroesCollectionView: MarvelHeroesCollectionView, didselectHeroAtIndex index: Int) {
+        delegate?.marvelHeroesView(marvelHeroesView: self, didselectHeroAtIndex: index)
+    }
+
     func marvelHeroesCollectionViewGetCellsCount(marvelHeroesCollectionView: MarvelHeroesCollectionView) -> Int? {
         delegate?.marvelHeroesViewGetCollectionViewCellsCount(marvelHeroesView: self)
     }

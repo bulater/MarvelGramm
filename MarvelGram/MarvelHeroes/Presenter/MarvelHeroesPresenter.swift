@@ -10,6 +10,7 @@ import Foundation
 protocol MarvelHeroesPresenterProtocol {
     func getMarvelHeroViewModelAt(index: Int) -> MarvelHeroViewModel?
     func getMarvelHeroViewModelCount() -> Int?
+    func handleSelectHeroAt(index: Int)
 }
 
 class MarvelHeroesPresenter {
@@ -46,6 +47,11 @@ class MarvelHeroesPresenter {
     // MARK: - MarvelHeroesPresenterProtocol
 
 extension MarvelHeroesPresenter: MarvelHeroesPresenterProtocol {
+    func handleSelectHeroAt(index: Int) {
+        let heroViewModel = marvelHeroesDataSuorce.marvelHeroViewModels[index]
+        view?.navigateTo(destination: .detail(heroViewModel))
+    }
+
     func getMarvelHeroViewModelAt(index: Int) -> MarvelHeroViewModel? {
         marvelHeroesDataSuorce.marvelHeroViewModels[index]
     }

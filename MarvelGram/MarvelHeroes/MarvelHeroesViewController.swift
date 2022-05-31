@@ -7,8 +7,14 @@
 
 import UIKit
 
+enum Destination {
+    case detail(MarvelHeroViewModel?)
+    case heroes
+}
+
 protocol MarvelHeroesViewProtocol: AnyObject {
     func reloadCollectionView()
+    func navigateTo(destination: Destination)
 }
 
 class MarvelHeroesViewController: UIViewController {
@@ -35,13 +41,25 @@ class MarvelHeroesViewController: UIViewController {
 
     // MARK: - MarvelHeroesViewProtocol
 
-extension MarvelHeroesViewController: MarvelHeroesViewProtocol{
-
+extension MarvelHeroesViewController: MarvelHeroesViewProtocol {
+    func navigateTo(destination: Destination) {
+        switch destination {
+        case .detail(let hero):
+            let viewController = MarvelHeroDetailModuleBuilder.createModule(withType: .detail(hero))
+            navigationController?.pushViewController(viewController, animated: true)
+        case .heroes:
+            break
+        }
+    }
 }
 
     // MARK: - MarvelHeroesViewDelegate
 
 extension MarvelHeroesViewController: MarvelHeroesViewDelegate {
+    func marvelHeroesView(marvelHeroesView: MarvelHeroesView, didselectHeroAtIndex index: Int) {
+        presenter?.handleSelectHeroAt(index: index)
+    }
+
     func marvelHeroesViewGetCollectionViewCellsCount(marvelHeroesView: MarvelHeroesView) -> Int? {
         presenter?.getMarvelHeroViewModelCount()
     }

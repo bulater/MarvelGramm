@@ -10,6 +10,7 @@ import UIKit
 protocol MarvelHeroesCollectionViewDelegate: AnyObject {
     func marvelHeroesCollectionViewGetCellsCount(marvelHeroesCollectionView: MarvelHeroesCollectionView) -> Int?
     func marvelHeroesCollectionView(marvelHeroesCollectionView: MarvelHeroesCollectionView, getSuperHeroViewModelAt index: Int) -> MarvelHeroViewModel?
+    func marvelHeroesCollectionView(marvelHeroesCollectionView: MarvelHeroesCollectionView, didselectHeroAtIndex index: Int)
 }
 
 class MarvelHeroesCollectionView: UICollectionView {
@@ -57,5 +58,6 @@ extension MarvelHeroesCollectionView: UICollectionViewDataSource {
 
 extension MarvelHeroesCollectionView: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        customDelegate?.marvelHeroesCollectionView(marvelHeroesCollectionView: self, didselectHeroAtIndex: indexPath.row)
     }
 }
