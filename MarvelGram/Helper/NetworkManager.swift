@@ -74,6 +74,36 @@ class NetworkManager {
             }
         }
     }
+
+    func getMarvelHeroImage(from model: MarvelHeroViewModel) -> UIImage {
+        var image = UIImage()
+        let imageCahche = ImageCache.shared
+        if let imageFromCache = imageCahche.object(forKey: (model.imageURL ?? "") + Format.jpg as NSString) {
+            image = imageFromCache
+            return image
+        }
+
+        let imageURLString = model.imageURL
+        DispatchQueue.global().async {
+            guard let url = model.imageURL,
+                let imageUrl = URL(string: url + Format.jpg),
+                let imageData = try? Data(contentsOf: imageUrl)
+            else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                guard let imageToCache = UIImage(data: imageData) else { return }
+                if imageURLString == url {
+                    image = imageToCache
+                }
+
+                imageCahche.setObject(imageToCache, forKey: (model.imageURL ?? "") + Format.jpg as NSString)
+            }
+        }
+
+        return image
+    }
 }
 
 struct MarvelHeroViewModel {
