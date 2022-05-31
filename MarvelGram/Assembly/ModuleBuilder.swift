@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum ModuleType {
+    case detail(MarvelHeroViewModel?)
+    case `default`
+}
+
 protocol ModuleBuilder {
-    static func createModule() -> UIViewController
+    static func createModule(withType type: ModuleType) -> UIViewController
 }

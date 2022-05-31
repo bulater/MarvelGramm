@@ -8,7 +8,7 @@
 import UIKit
 
 class MarvelHeroesModuleBuilder: ModuleBuilder {
-    static func createModule() -> UIViewController {
+    static func createModule(withType: ModuleType) -> UIViewController {
         let viewController = MarvelHeroesViewController()
         let presenter = MarvelHeroesPresenter(view: viewController)
 

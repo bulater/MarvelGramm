@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let viewController = MarvelHeroesModuleBuilder.createModule()
+        let viewController = MarvelHeroesModuleBuilder.createModule(withType: .default)
         let navigationController = UINavigationController(rootViewController: viewController)
 
         guard let windowScene = (scene as? UIWindowScene) else { return }

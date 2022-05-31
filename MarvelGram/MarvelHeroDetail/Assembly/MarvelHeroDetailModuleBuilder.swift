@@ -8,11 +8,18 @@
 import UIKit
 
 class MarvelHeroDetailModuleBuilder: ModuleBuilder {
-    static func createModule() -> UIViewController {
+    static func createModule(withType type: ModuleType) -> UIViewController {
         let viewController = MarvelHeroDetailViewController()
         let presenter = MarvelHeroDetailPresenter(view: viewController)
 
         viewController.presenter = presenter
+
+        switch type {
+        case .detail(let heroViewModel):
+            presenter.hero = heroViewModel
+        case .default:
+            break
+        }
 
         return viewController
     }
