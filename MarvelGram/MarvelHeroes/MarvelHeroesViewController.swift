@@ -31,11 +31,20 @@ class MarvelHeroesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBar()
     }
+
+    // MARK: - Public Method
 
     func reloadCollectionView() {
         guard let view = self.view as? MarvelHeroesView else { return }
         view.marvelHeroesCollectionView.reloadData()
+    }
+
+    // MARK: - Private Method
+
+    private func configureNavigationBar() {
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "background")
     }
 }
 

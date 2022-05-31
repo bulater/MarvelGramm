@@ -23,10 +23,12 @@ class MarvelHeroesView: UIView {
     // MARK: - Private Properties
 
 
+
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureView()
         addSubViews()
     }
 
@@ -34,11 +36,18 @@ class MarvelHeroesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Private Methods
+
+    private func configureView() {
+        backgroundColor = UIColor(named: "background")
+    }
+
     // MARK: - Make Subviews
 
     static func makeCollectionView(layout: UICollectionViewLayout, delegate: MarvelHeroesCollectionViewDelegate) ->  MarvelHeroesCollectionView {
         let collectionView = MarvelHeroesCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.customDelegate = delegate
+        collectionView.backgroundColor = UIColor(named: "background")
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.register(MarvelHeroesCollectionViewCell.self,
                                 forCellWithReuseIdentifier: MarvelHeroesCollectionViewCell.cellID)

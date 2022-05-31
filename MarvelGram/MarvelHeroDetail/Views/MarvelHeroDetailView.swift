@@ -25,6 +25,7 @@ class MarvelHeroDetailView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureView()
         addSubViews()
     }
 
@@ -36,6 +37,12 @@ class MarvelHeroDetailView: UIView {
 
     func setHeroImageView(image: UIImage?) {
         heroImageView.image = image
+    }
+
+    // MARK: - Private Methods
+
+    private func configureView() {
+        backgroundColor = UIColor(named: "background")
     }
 
     // MARK: - Make Subviews
@@ -81,7 +88,7 @@ class MarvelHeroDetailView: UIView {
 
     private func activateHeroImageViewConstraints() {
         NSLayoutConstraint.activate([
-            heroImageView.topAnchor.constraint(equalTo: topAnchor),
+            heroImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             heroImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             heroImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             heroImageView.heightAnchor.constraint(equalToConstant: 375)
