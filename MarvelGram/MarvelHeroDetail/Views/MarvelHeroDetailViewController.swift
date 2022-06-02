@@ -8,7 +8,8 @@
 import UIKit
 
 protocol MarvelHeroDetailViewProtocol: AnyObject {
-    func setHeroImage(image: UIImage?) 
+    func setHeroImage(image: UIImage?)
+    func setHeroDescription(description: String?)
 }
 
 class MarvelHeroDetailViewController: UIViewController {
@@ -32,6 +33,7 @@ class MarvelHeroDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.setHeroImage()
+        presenter?.setHeroDescription()
     }
 
     // MARK: - Private Methods
@@ -64,7 +66,12 @@ class MarvelHeroDetailViewController: UIViewController {
 extension MarvelHeroDetailViewController: MarvelHeroDetailViewProtocol {
     func setHeroImage(image: UIImage?) {
         guard let view = view as? MarvelHeroDetailView else { return }
-        view.setHeroImageView(image: image)
+        view.setHeroImage(image: image)
+    }
+
+    func setHeroDescription(description: String?) {
+        guard let view = view as? MarvelHeroDetailView else { return }
+        view.setHeroDescription(description: description)
     }
 }
 

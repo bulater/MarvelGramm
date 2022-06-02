@@ -9,6 +9,7 @@ import Foundation
 
 protocol MarvelHeroDetailPresenterProtocol {
     func setHeroImage()
+    func setHeroDescription()
 }
 
 class MarvelHeroDetailPresenter {
@@ -31,5 +32,9 @@ extension MarvelHeroDetailPresenter: MarvelHeroDetailPresenterProtocol {
         guard let hero = hero else { return }
         let image = NetworkManager.shared.getMarvelHeroImage(from: hero)
         view?.setHeroImage(image: image)
+    }
+
+    func setHeroDescription() {
+        view?.setHeroDescription(description: hero?.description)
     }
 }
