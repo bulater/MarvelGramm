@@ -17,6 +17,7 @@ class MarvelHeroDetailView: UIView {
 
     lazy var marvelHeroDetailCollectionView: MarvelHeroDetailCollectionView = { MarvelHeroDetailView.makeCollectionView(self) }()
     lazy var heroImageView: UIImageView = { MarvelHeroDetailView.makeHeroImageView() }()
+    lazy var heroDescriptionLabel: UILabel = { MarvelHeroDetailView.makeHeroDectriptionLabel() }()
 
     // MARK: - Private Properties
 
@@ -27,6 +28,7 @@ class MarvelHeroDetailView: UIView {
         super.init(frame: frame)
         configureView()
         addSubViews()
+        configureHeroDescriptionLabel()
     }
 
     required init?(coder: NSCoder) {
@@ -35,14 +37,27 @@ class MarvelHeroDetailView: UIView {
 
     // MARK: - Public Methods
 
-    func setHeroImageView(image: UIImage?) {
+    func setHeroImage(image: UIImage?) {
         heroImageView.image = image
+    }
+
+    func setHeroDescription(description: String?) {
+        heroDescriptionLabel.text = description
     }
 
     // MARK: - Private Methods
 
     private func configureView() {
         backgroundColor = UIColor(named: "background")
+    }
+
+    private func configureHeroDescriptionLabel() {
+        guard let attributedText = heroDescriptionLabel.attributedText else { return }
+        let attributedString = NSMutableAttributedString(attributedString: attributedText)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 24
+        attributedString.addAttributes([NSAttributedString.Key.paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: attributedString.length))
+        heroDescriptionLabel.attributedText = attributedString
     }
 
     // MARK: - Make Subviews
@@ -67,12 +82,27 @@ class MarvelHeroDetailView: UIView {
         return view
     }
 
+    static func makeHeroDectriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.font = UIFont(name: "Helvetica Neue", size: 14)
+        label.backgroundColor = UIColor(named: "background")
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }
+
 
     // MARK: - Add SubViews
 
     private func addSubViews() {
         addSubview(heroImageView)
         activateHeroImageViewConstraints()
+
+        addSubview(heroDescriptionLabel)
+        activateHeroDescriptionLabelViewConstraints()
+
 
 //        addSubview(marvelHeroDetailCollectionView)
 //        activateCollectionViewConstraints()
@@ -92,6 +122,15 @@ class MarvelHeroDetailView: UIView {
             heroImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             heroImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             heroImageView.heightAnchor.constraint(equalToConstant: 375)
+        ])
+    }
+
+    private func activateHeroDescriptionLabelViewConstraints() {
+        NSLayoutConstraint.activate([
+            heroDescriptionLabel.topAnchor.constraint(equalTo: heroImageView.bottomAnchor),
+            heroDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            heroDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            heroDescriptionLabel.heightAnchor.constraint(equalToConstant: 132)
         ])
     }
 }

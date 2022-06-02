@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 enum NetworkError: Error {
     case invalidURL
@@ -63,7 +64,7 @@ class NetworkManager {
             else {
                 return
             }
-            
+
             DispatchQueue.main.async {
                 guard let imageToCache = UIImage(data: imageData) else { return }
                 if imageURLString == url {
@@ -122,4 +123,3 @@ class ImageCache {
     static let shared = NSCache<NSString, UIImage>()
     private init() {}
 }
-
