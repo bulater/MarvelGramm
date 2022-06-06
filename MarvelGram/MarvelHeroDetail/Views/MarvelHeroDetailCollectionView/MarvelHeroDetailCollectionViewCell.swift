@@ -34,9 +34,9 @@ class MarvelHeroDetailCollectionViewCell: UICollectionViewCell {
         NetworkManager.shared.setMarvelHeroImage(from: viewModel, image: imageView)
     }
 
-//    override func prepareForReuse() {
-//        imageView.image = nil
-//    }
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
 
     // MARK: - Make Subviews
 
