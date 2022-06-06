@@ -18,6 +18,7 @@ class MarvelHeroesCollectionViewCell: UICollectionViewListCell {
     lazy var contentContainer: UIView = { MarvelHeroesCollectionViewCell.makeContentContainerView() }()
 
     // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubViews()

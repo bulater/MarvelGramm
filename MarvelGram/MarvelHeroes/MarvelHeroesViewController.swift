@@ -77,8 +77,3 @@ extension MarvelHeroesViewController: MarvelHeroesViewDelegate {
         presenter?.getMarvelHeroViewModelAt(index: index)
     }
 }
-
-
-struct MarvelHeroesDataSuorce {
-    var marvelHeroViewModels: [MarvelHeroViewModel] = []
-}
