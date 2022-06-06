@@ -23,14 +23,30 @@ class MarvelHeroesPresenter {
 
     init(view: MarvelHeroesViewProtocol) {
         self.view = view
-        fetchMarvelHeroModels()
+//        fetchMarvelHeroModels()
+        fetchMarvelHeroModelsAF()
     }
 
     // MARK: - Private Methods
 
-    private func fetchMarvelHeroModels() {
-        NetworkManager.shared.fetchMarvelHeroesData { result in
-            switch result {
+//    private func fetchMarvelHeroModels() {
+//        NetworkManager.shared.fetchMarvelHeroesData { result in
+//            switch result {
+//            case .success(let data):
+//                let viewModels = data.map { MarvelHeroViewModel(hero: $0) }
+//                self.marvelHeroesDataSuorce.marvelHeroViewModels = viewModels
+//                DispatchQueue.main.async {
+//                    self.view?.reloadCollectionView()
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+
+    private func fetchMarvelHeroModelsAF() {
+        NetworkManagerAF.shared.fetchData { data in
+            switch data {
             case .success(let data):
                 let viewModels = data.map { MarvelHeroViewModel(hero: $0) }
                 self.marvelHeroesDataSuorce.marvelHeroViewModels = viewModels
