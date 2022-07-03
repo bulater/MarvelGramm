@@ -8,7 +8,7 @@
 import UIKit
 
 enum Destination {
-    case detail(MarvelHeroViewModel?)
+    case detail(MarvelHeroViewModel?, [MarvelHeroViewModel])
     case heroes
 }
 
@@ -37,7 +37,9 @@ class MarvelHeroesViewController: UIViewController {
     // MARK: - Public Method
 
     func reloadCollectionView() {
-        guard let view = self.view as? MarvelHeroesView else { return }
+        guard let view = self.view as? MarvelHeroesView else {
+            return
+        }
         view.marvelHeroesCollectionView.reloadData()
     }
 
@@ -53,8 +55,8 @@ class MarvelHeroesViewController: UIViewController {
 extension MarvelHeroesViewController: MarvelHeroesViewProtocol {
     func navigateTo(destination: Destination) {
         switch destination {
-        case .detail(let hero):
-            let viewController = MarvelHeroDetailModuleBuilder.createModule(withType: .detail(hero))
+        case .detail(let hero, let viewModels):
+            let viewController = MarvelHeroDetailModuleBuilder.createModule(withType: .detail(hero, viewModels))
             navigationController?.pushViewController(viewController, animated: true)
         case .heroes:
             break
@@ -76,9 +78,4 @@ extension MarvelHeroesViewController: MarvelHeroesViewDelegate {
     func marvelHeroesView(marvelHeroesView: MarvelHeroesView, getSuperHeroViewModelAt index: Int) -> MarvelHeroViewModel? {
         presenter?.getMarvelHeroViewModelAt(index: index)
     }
-}
-
-
-struct MarvelHeroesDataSuorce {
-    var marvelHeroViewModels: [MarvelHeroViewModel] = []
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 enum ModuleType {
-    case detail(MarvelHeroViewModel?)
+    case detail(MarvelHeroViewModel?, [MarvelHeroViewModel])
     case `default`
 }
 

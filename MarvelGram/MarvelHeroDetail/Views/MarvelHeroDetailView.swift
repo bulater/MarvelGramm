@@ -21,6 +21,24 @@ class MarvelHeroDetailView: UIView {
 
     // MARK: - Private Properties
 
+    private enum LayoutConstraints {
+        enum ImageView {
+            static let heightAnchor: CGFloat = 375
+        }
+
+        enum DescriptionLabel {
+            static let lineSpacing: CGFloat = 24
+            static let leadingAnchor: CGFloat = 16
+            static let trailingAnchor: CGFloat = -16
+            static let heightAnchor: CGFloat = 132
+        }
+
+        enum DetailCollectionView {
+            static let topAnchor: CGFloat = 30
+            static let bottomAnchor: CGFloat = 10
+            static let sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        }
+    }
 
     // MARK: - Init
 
@@ -55,8 +73,9 @@ class MarvelHeroDetailView: UIView {
         guard let attributedText = heroDescriptionLabel.attributedText else { return }
         let attributedString = NSMutableAttributedString(attributedString: attributedText)
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 24
-        attributedString.addAttributes([NSAttributedString.Key.paragraphStyle : paragraphStyle], range: NSRange(location: 0, length: attributedString.length))
+        paragraphStyle.lineSpacing = LayoutConstraints.DescriptionLabel.lineSpacing
+        attributedString.addAttributes([NSAttributedString.Key.paragraphStyle : paragraphStyle],
+                                       range: NSRange(location: 0, length: attributedString.length))
         heroDescriptionLabel.attributedText = attributedString
     }
 
@@ -64,8 +83,10 @@ class MarvelHeroDetailView: UIView {
 
     static func makeCollectionView(_ delegate: MarvelHeroDetailCollectionViewDelegate) ->  MarvelHeroDetailCollectionView {
         let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = LayoutConstraints.DetailCollectionView.sectionInset
         let collectionView = MarvelHeroDetailCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.customDelegate = delegate
+        collectionView.backgroundColor = UIColor(named: "background")
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.register(MarvelHeroDetailCollectionViewCell.self,
                                 forCellWithReuseIdentifier: MarvelHeroDetailCollectionViewCell.cellID)
@@ -104,33 +125,40 @@ class MarvelHeroDetailView: UIView {
         activateHeroDescriptionLabelViewConstraints()
 
 
-//        addSubview(marvelHeroDetailCollectionView)
-//        activateCollectionViewConstraints()
+        addSubview(marvelHeroDetailCollectionView)
+        activateCollectionViewConstraints()
     }
 
     // MARK: - Layout
-
-    private func activateCollectionViewConstraints() {
-        NSLayoutConstraint.activate([
-
-        ])
-    }
 
     private func activateHeroImageViewConstraints() {
         NSLayoutConstraint.activate([
             heroImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             heroImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             heroImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            heroImageView.heightAnchor.constraint(equalToConstant: 375)
+            heroImageView.heightAnchor.constraint(equalToConstant: LayoutConstraints.ImageView.heightAnchor)
         ])
     }
 
     private func activateHeroDescriptionLabelViewConstraints() {
         NSLayoutConstraint.activate([
             heroDescriptionLabel.topAnchor.constraint(equalTo: heroImageView.bottomAnchor),
-            heroDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            heroDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            heroDescriptionLabel.heightAnchor.constraint(equalToConstant: 132)
+            heroDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor,
+                                                          constant: LayoutConstraints.DescriptionLabel.leadingAnchor),
+            heroDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                                           constant: LayoutConstraints.DescriptionLabel.trailingAnchor),
+            heroDescriptionLabel.heightAnchor.constraint(equalToConstant: LayoutConstraints.DescriptionLabel.heightAnchor)
+        ])
+    }
+
+    private func activateCollectionViewConstraints() {
+        NSLayoutConstraint.activate([
+            marvelHeroDetailCollectionView.topAnchor.constraint(equalTo: heroDescriptionLabel.bottomAnchor,
+                                                                constant: LayoutConstraints.DetailCollectionView.topAnchor),
+            marvelHeroDetailCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor,
+                                                                   constant: LayoutConstraints.DetailCollectionView.bottomAnchor),
+            marvelHeroDetailCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            marvelHeroDetailCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

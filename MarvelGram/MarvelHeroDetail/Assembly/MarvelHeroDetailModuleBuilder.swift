@@ -10,13 +10,15 @@ import UIKit
 class MarvelHeroDetailModuleBuilder: ModuleBuilder {
     static func createModule(withType type: ModuleType) -> UIViewController {
         let viewController = MarvelHeroDetailViewController()
-        let presenter = MarvelHeroDetailPresenter(view: viewController)
+        let marveHeroDetailDataSource = MarveHeroDetailDataSource()
+        let presenter = MarvelHeroDetailPresenter(view: viewController, marveHeroDetailDataSource: marveHeroDetailDataSource)
 
         viewController.presenter = presenter
 
         switch type {
-        case .detail(let heroViewModel):
-            presenter.hero = heroViewModel
+        case .detail(let hero, let viewModels):
+            presenter.hero = hero
+            presenter.marveHeroDetailDataSource.marvelHeroViewModels = viewModels
         case .default:
             break
         }

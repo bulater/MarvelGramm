@@ -8,8 +8,8 @@
 import Foundation
 
 protocol MarvelHeroDetailPresenterProtocol {
-    func setHeroImage()
-    func setHeroDescription()
+    func configureView(viewModel: MarvelHeroViewModel?)
+    func handleAppearingView()
 }
 
 class MarvelHeroDetailPresenter {
@@ -17,24 +17,30 @@ class MarvelHeroDetailPresenter {
 
     weak var view: MarvelHeroDetailViewProtocol?
     var hero: MarvelHeroViewModel?
+    var marveHeroDetailDataSource: MarveHeroDetailDataSource
 
     // MARK: - Init
 
-    init(view: MarvelHeroDetailViewProtocol) {
+    init(view: MarvelHeroDetailViewProtocol, marveHeroDetailDataSource: MarveHeroDetailDataSource) {
         self.view = view
+        self.marveHeroDetailDataSource = marveHeroDetailDataSource
     }
 }
 
 // MARK: - MarvelHeroDetailPresenterProtocol
 
 extension MarvelHeroDetailPresenter: MarvelHeroDetailPresenterProtocol {
-    func setHeroImage() {
-        guard let hero = hero else { return }
-        let image = NetworkManager.shared.getMarvelHeroImage(from: hero)
-        view?.setHeroImage(image: image)
+    func handleAppearingView() {
+        configureView(viewModel: hero)
     }
 
-    func setHeroDescription() {
-        view?.setHeroDescription(description: hero?.description)
+    func configureView(viewModel: MarvelHeroViewModel?) {
+        guard let viewModel = viewModel else {
+            return
+        }
+        let image = NetworkManager.shared.getMarvelHeroImage(from: viewModel)
+        view?.setHeroImage(image: image)
+        view?.setHeroDescription(description: viewModel.description)
+        view?.setNavigationBarTitle(title: viewModel.name)
     }
 }

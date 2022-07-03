@@ -10,7 +10,8 @@ import UIKit
 class MarvelHeroesModuleBuilder: ModuleBuilder {
     static func createModule(withType: ModuleType) -> UIViewController {
         let viewController = MarvelHeroesViewController()
-        let presenter = MarvelHeroesPresenter(view: viewController)
+        let marvelHeroesDataSuorce = MarvelHeroesDataSuorce()
+        let presenter = MarvelHeroesPresenter(view: viewController, marvelHeroesDataSuorce: marvelHeroesDataSuorce)
 
         viewController.presenter = presenter
 

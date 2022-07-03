@@ -17,12 +17,13 @@ class MarvelHeroesPresenter {
     // MARK: - Public Properties
 
     weak var view: MarvelHeroesViewProtocol?
-    var marvelHeroesDataSuorce = MarvelHeroesDataSuorce()
+    var marvelHeroesDataSuorce: MarvelHeroesDataSuorce
 
     // MARK: - Init
 
-    init(view: MarvelHeroesViewProtocol) {
+    init(view: MarvelHeroesViewProtocol, marvelHeroesDataSuorce: MarvelHeroesDataSuorce) {
         self.view = view
+        self.marvelHeroesDataSuorce = marvelHeroesDataSuorce
         fetchMarvelHeroModels()
     }
 
@@ -49,7 +50,9 @@ class MarvelHeroesPresenter {
 extension MarvelHeroesPresenter: MarvelHeroesPresenterProtocol {
     func handleSelectHeroAt(index: Int) {
         let heroViewModel = marvelHeroesDataSuorce.marvelHeroViewModels[index]
-        view?.navigateTo(destination: .detail(heroViewModel))
+
+        let viewModels = marvelHeroesDataSuorce.marvelHeroViewModels.takeElements(elementCount: 10)
+        view?.navigateTo(destination: .detail(heroViewModel, viewModels))
     }
 
     func getMarvelHeroViewModelAt(index: Int) -> MarvelHeroViewModel? {

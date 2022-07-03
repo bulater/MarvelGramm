@@ -17,12 +17,16 @@ class MarvelHeroesView: UIView {
     // MARK: - Public Properties
 
     weak var delegate: MarvelHeroesViewDelegate?
-
+    
     lazy var marvelHeroesCollectionView: MarvelHeroesCollectionView = { MarvelHeroesView.makeCollectionView(layout: generateCollectionViewLayout(), delegate: self) }()
 
     // MARK: - Private Properties
 
-
+    private enum LayoutConstraints {
+        enum CollectionView {
+            static let contentInset = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+        }
+    }
 
     // MARK: - Init
 
@@ -61,13 +65,13 @@ class MarvelHeroesView: UIView {
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(2/3),
                 heightDimension: .fractionalHeight(1.0)))
-        mainItem.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+        mainItem.contentInsets = LayoutConstraints.CollectionView.contentInset
 
         let pairItem = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .fractionalHeight(0.5)))
-        pairItem.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+        pairItem.contentInsets = LayoutConstraints.CollectionView.contentInset
 
         let trailingGroup = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
@@ -86,7 +90,7 @@ class MarvelHeroesView: UIView {
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1/3),
                 heightDimension: .fractionalHeight(1)))
-        tripletItem.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+        tripletItem.contentInsets = LayoutConstraints.CollectionView.contentInset
 
         let tripletGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
